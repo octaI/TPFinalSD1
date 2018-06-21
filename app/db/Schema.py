@@ -1,0 +1,2 @@
+class Tables:
+    Candidate = 'Vote'

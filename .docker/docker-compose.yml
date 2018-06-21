@@ -1,0 +1,57 @@
+version: '3'
+services:
+
+  roach-ui:
+    hostname: "roach-ui"
+    image: cockroachdb/cockroach
+    command: start --insecure
+    ports:
+      - 8081:8080
+    networks:
+      - cockroachnet
+    volumes:
+      - ./data/roach-ui:/cockroach/cockroach-data
+
+
+  roach-1:
+    hostname: "roach1"
+    image: cockroachdb/cockroach
+    command: start --insecure --join=roach-ui
+    depends_on:
+      - roach-ui
+    networks:
+      - cockroachnet
+    volumes:
+      - ./data/roach-1:/cockroach/cockroach-data
+
+  roach-init:
+    image: cockroachdb/cockroach
+    networks:
+      - cockroachnet
+    volumes:
+      - ./../db/:/devel/db
+      - ./cockroach/setup_db.sh:/setup_db.sh
+    depends_on:
+      - roach-1
+    entrypoint: "/bin/bash"
+    command: /setup_db.sh
+
+  app:
+    hostname: "app"
+    build:
+      context: "../"
+      dockerfile: ".docker/python/Dockerfile"
+    volumes:
+      - "../app/:/devel/"
+    command: ["bash", "/startup.sh"]
+    ports:
+      - 8080:8080
+    links:
+      - roach-ui
+    depends_on:
+      - roach-ui
+    networks:
+      - cockroachnet
+
+networks:
+  cockroachnet:
