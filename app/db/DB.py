@@ -12,7 +12,7 @@ Engine = create_engine("{}://{}@{}:{}/{}?{}".format(
     config.DB.USER,
     config.DB.HOST,
     config.DB.PORT,
-    config.DB.DATABASE,
+    config.DB.DATABASE.lower(),
     "&".join(["{}={}".format(key, value) for key, value in config.DB.SETTINGS.items()])
 ))
 

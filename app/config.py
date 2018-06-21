@@ -6,10 +6,14 @@ class APP:
 
 class DB:
     DRIVER = "cockroachdb"
-    DATABASE = "Elections"
-    USER = "user"
-    HOST = "host"
+    DATABASE = "Election"
+    USER = "distribuidos"
+    HOST = "roach-ui"
     PORT = 26257
     SETTINGS = {
         'sslmode': 'disable'
     }
+
+
+class INIT:
+    CREATE_CANDIDATES = False

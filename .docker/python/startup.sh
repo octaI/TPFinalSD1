@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-cd /devel
+pip install --no-cache-dir -r /devel/requirements.txt
 
 export PYTHONPATH=/devel
 
-python app/main.py
+python /devel/app/main.py

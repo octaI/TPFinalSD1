@@ -1,2 +1,3 @@
 class Tables:
-    Candidate = 'Vote'
+    Candidate = 'Candidate'
+    Vote = 'Vote'

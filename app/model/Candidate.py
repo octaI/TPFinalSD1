@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from app.db import DB, Schema
 from sqlalchemy import Column, Integer, String, DateTime
 
@@ -10,9 +12,9 @@ class Candidate(DB.Base):
     up_date = Column(DateTime, nullable=False)
     down_date = Column(DateTime, nullable=True)
 
-    @staticmethod
-    def find_all():
-        return DB.get_session().query(Candidate).all()
+    @classmethod
+    def find_all(cls):
+        return DB.get_session().query(cls).all()
 
     def to_dict(self):
         return {
@@ -22,3 +24,15 @@ class Candidate(DB.Base):
             "full_name": "{} {}".format(self.first_name, self.last_name),
             "up_date": str(self.up_date)
         }
+
+    @classmethod
+    def create(cls, data):
+        session = DB.get_session()
+        session.add_all([
+            Candidate(
+                first_name=data["first_name"],
+                last_name=data["last_name"],
+                up_date=datetime.now()
+            )
+        ])
+        session.commit()
