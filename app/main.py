@@ -11,9 +11,23 @@ def index():
     return send_from_directory(app.static_folder, 'index.html')
 
 
-@app.route("/candidate", methods=["GET"])
+@app.route("/candidates", methods=["GET"])
 def candidates():
     return jsonify(CandidateHandler.get_all_candidates(request)), 200
+
+
+@app.route("/candidate", methods=["GET"])
+def one_candidate():
+    return jsonify(CandidateHandler.get_one_candidate(request)), 200
+
+
+@app.route("/vote", methods=["GET", "POST"])
+def votes():
+    if request.method == "GET":
+        return jsonify(CandidateHandler.get_all_votes(request)), 200
+
+    if request.method == "POST":
+        return jsonify(CandidateHandler.insert_candidate_vote(request)), 200
 
 
 if __name__ == '__main__':

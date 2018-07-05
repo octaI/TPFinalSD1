@@ -1,7 +1,8 @@
 from datetime import datetime
 
+from sqlalchemy.orm import aliased, relationship
 from app.db import DB, Schema
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, inspect
 
 
 class Candidate(DB.Base):
@@ -24,6 +25,14 @@ class Candidate(DB.Base):
             "full_name": "{} {}".format(self.first_name, self.last_name),
             "up_date": str(self.up_date)
         }
+
+    @classmethod
+    def find_candidate(cls, candidate_name):
+        first_name = candidate_name.split(" ")[0]
+        last_name = candidate_name.split(" ")[1]
+        return DB.get_session().query(cls).filter(Candidate.first_name == first_name, Candidate.last_name == last_name)\
+            .all()
+
 
     @classmethod
     def create(cls, data):

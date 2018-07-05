@@ -8,6 +8,7 @@ from app.db import DB
 
 def init():
     DB.Base.metadata.create_all(DB.Engine)
+
     if config.INIT.CREATE_CANDIDATES:
         Candidate.create({
             "first_name": "Alan",
@@ -17,3 +18,5 @@ def init():
             "first_name": "Barbara",
             "last_name": "Liskov"
         })
+
+
