@@ -24,8 +24,8 @@ class Vote(DB.Base):
 
     def to_dict(self):
         return {
-            "id": self.id,
-            "Reference": self.reference,
+            "id": str(self.id),
+            "Reference": str(self.reference),
             "up_date": self.up_date
         }
 
@@ -38,7 +38,8 @@ class Vote(DB.Base):
         )
         session.add(new_vote)
         session.flush()
-
+        session.refresh(new_vote)
+        id_to_return = new_vote.id
         session.commit()
-        return new_vote.id
+        return id_to_return
 

@@ -19,7 +19,7 @@ class Candidate(DB.Base):
 
     def to_dict(self):
         return {
-            "id": self.id,
+            "id": str(self.id),
             "name": self.first_name,
             "last_name": self.last_name,
             "full_name": "{} {}".format(self.first_name, self.last_name),
