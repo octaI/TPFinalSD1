@@ -6,6 +6,7 @@ services:
     image: cockroachdb/cockroach
     ports:
       - 8081:8080
+      - 26257:26257
     networks:
       - cockroachnet
     volumes:
