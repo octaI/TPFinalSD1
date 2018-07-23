@@ -1,0 +1,16 @@
+config:
+  environments:
+    node_simple:
+      target: "http://localhost:5555/node"
+      phases:
+        - duration: 60
+          arrivalRate: 15
+        - duration: 30
+          arrivalRate: 30 
+scenarios:
+  - name: "Testeo endpoint lento y pesado"
+    flow:
+      - post:
+          url: "/vote"
+          body:
+            candidate_id: "1005"
