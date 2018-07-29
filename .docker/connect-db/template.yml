@@ -1,0 +1,17 @@
+version: '3'
+services:
+
+  roach-1:
+    hostname: "roach1"
+    image: cockroachdb/cockroach
+    command: start --insecure --join=EXTERN_NODE
+    networks:
+      - cockroachnet
+    ports:
+      - 26258:26257
+    volumes:
+      - ./data/roach-1:/cockroach/cockroach-data
+
+networks:
+  cockroachnet:
+    external: true
