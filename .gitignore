@@ -1,9 +1,7 @@
 *.log
 .docker/data
 .venv
-<<<<<<< HEAD
 __pycache__/
-connect_to_db/data/*
-=======
+.docker/connect-db/data/*
 .idea/
->>>>>>> 409ddd795dbd61386f82da86006a65439f1b4ff6
+
