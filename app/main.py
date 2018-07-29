@@ -2,8 +2,10 @@ from flask import Flask, send_from_directory, jsonify, request
 from app import config
 from app.handlers import CandidateHandler
 from app.helper import initializer
+import time
 
 app = Flask(__name__)
+
 
 
 @app.route("/")
@@ -31,5 +33,6 @@ def votes():
 
 
 if __name__ == '__main__':
+    time.sleep(15)
     initializer.init()
     app.run(port=config.APP.PORT, debug=config.APP.DEBUG, host=config.APP.HOST)

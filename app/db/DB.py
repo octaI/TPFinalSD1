@@ -14,7 +14,7 @@ Engine = create_engine("{}://{}@{}:{}/{}?{}".format(
     config.DB.PORT,
     config.DB.DATABASE.lower(),
     "&".join(["{}={}".format(key, value) for key, value in config.DB.SETTINGS.items()])
-))
+), pool_size=300)
 
 Session = sessionmaker(bind=Engine)
 

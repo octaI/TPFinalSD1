@@ -16,4 +16,4 @@ class DB:
 
 
 class INIT:
-    CREATE_CANDIDATES = False
+    CREATE_CANDIDATES = False 

@@ -1,9 +1,0 @@
-version: '3'
-services:
-
-  roach-1:
-    hostname: "roach1"
-    image: cockroachdb/cockroach
-    command: start --insecure --join=EXTERN_NODE
-    volumes:
-      - ./data/roach-1:/cockroach/cockroach-data
