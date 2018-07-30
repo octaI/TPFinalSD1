@@ -15,6 +15,36 @@ services:
     entrypoint: "/bin/bash"
     command: "/init_db.sh"
 
+  roach2:
+    hostname: "roach2"
+    image: cockroachdb/cockroach
+    ports:
+      - 26258:26257
+    networks:
+      - cockroachnet
+    volumes:
+      - ./data/roach-2:/cockroach/cockroach-data
+    depends_on:
+      - roach-ui
+    command: "start --insecure --join=roach-ui:26257"
+
+  # To add more node just copy this block code and change {N} to "node count (3,4,5,...)"
+  # or just run in terminal:
+  #   docker run -d --name=roach{N} --hostname=roach{N} --net=cockroachnet -v "${PWD}/cockroach-data/roach{N}:/cockroach/cockroach-data" cockroachdb/cockroach start --insecure --join=roach-ui
+  # To distribute run read: https://www.cockroachlabs.com/docs/v2.0/deploy-cockroachdb-on-premises-insecure
+  #roach{N}:
+  #  hostname: "roach{N}"
+  #  image: cockroachdb/cockroach
+  #  ports:
+  #    - 2625{7 + N}:26257
+  #  networks:
+  #    - cockroachnet
+  #  volumes:
+  #    - ./data/roach-N:/cockroach/cockroach-data
+  #  depends_on:
+  #    - roach-ui
+  #  command: "start --insecure --join=roach-ui:26257"
+
   flask-app:
     hostname: "app"
     image: python:3
