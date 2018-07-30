@@ -15,17 +15,6 @@ services:
     entrypoint: "/bin/bash"
     command: "/init_db.sh"
 
-  roach-1:
-    hostname: "roach1"
-    image: cockroachdb/cockroach
-    command: start --insecure --join=roach-ui
-    depends_on:
-      - roach-ui
-    networks:
-      - cockroachnet
-    volumes:
-      - ./data/roach-1:/cockroach/cockroach-data
-
   flask-app:
     hostname: "app"
     image: python:3
@@ -41,4 +30,3 @@ services:
 
 networks:
   cockroachnet:
-    external: true

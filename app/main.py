@@ -3,15 +3,22 @@ from app import config
 from app.handlers import CandidateHandler
 from app.helper import initializer
 import time
+import logging
 
 app = Flask(__name__)
 
+@app.before_first_request
+def configure():
+    gunicorn_logger = logging.getLogger("gunicorn.error")
+    app.logger.handlers.extend(gunicorn_logger.handlers)
+    app.logger.setLevel(logging.DEBUG)
 
+    initializer.init()
+    logging.info("Execute init")
 
 @app.route("/")
 def index():
     return send_from_directory(app.static_folder, 'index.html')
-
 
 @app.route("/candidates", methods=["GET"])
 def candidates():
@@ -33,6 +40,5 @@ def votes():
 
 
 if __name__ == '__main__':
-    time.sleep(15)
     initializer.init()
     app.run(port=config.APP.PORT, debug=config.APP.DEBUG, host=config.APP.HOST)

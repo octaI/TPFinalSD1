@@ -36,6 +36,8 @@ class Candidate(DB.Base):
 
     @classmethod
     def create(cls, data):
+        if (len(cls.find_candidate(data["first_name"] + " " + data["last_name"])) > 0):
+            return
         session = DB.get_session()
         session.add_all([
             Candidate(

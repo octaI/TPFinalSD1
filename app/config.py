@@ -3,7 +3,6 @@ class APP:
     PORT = 8080
     DEBUG = True
 
-
 class DB:
     DRIVER = "cockroachdb"
     DATABASE = "Election"
@@ -16,4 +15,4 @@ class DB:
 
 
 class INIT:
-    CREATE_CANDIDATES = False 
+    CREATE_CANDIDATES = True 
